@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple HomeKit & IoT Smart Home Kit | Fekra Tech Academy</title>
+    <link rel="icon" type="image/png" href="./logo-main.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@700;900&family=Cairo:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html[dir="rtl"] {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        html[dir="rtl"] .logo-font {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-premium {
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s ease !important;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+        }
+
+        .glow-card:hover {
+            box-shadow: 0 15px 35px -5px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .dark .glow-card:hover {
+            box-shadow: 0 15px 35px -5px rgba(16, 185, 129, 0.4);
+            border-color: rgba(16, 185, 129, 0.6);
+        }
+
+        /* Custom schematic wire styling */
+        .circuit-grid {
+            background-size: 24px 24px;
+            background-image:
+                linear-gradient(to right, rgba(51, 65, 85, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(51, 65, 85, 0.15) 1px, transparent 1px);
+        }
+    </style>
+
+    <script>
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    </script>
+</head>
+
+<body
+    class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 p-4 sticky top-0 z-50">
+        <div class="container mx-auto max-w-6xl flex justify-between items-center">
+            <a href="https://fekra-tech-acad.vercel.app/portfolio.html" class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white text-lg shadow-lg">
+                    <i class="fa-solid fa-house-signal"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black logo-font tracking-wider text-emerald-400">FEKRA IOT</span>
+                    <span class="text-[10px] text-slate-400 block font-semibold">HomeKit & Blynk Smart Villa Kit</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <a href="https://fekra-tech-acad.vercel.app/portfolio.html"
+                    class="text-xs font-bold text-slate-300 hover:text-white flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-3.5 py-1.5 rounded-full transition border border-slate-700">
+                    <i class="fa-solid fa-arrow-left rtl:rotate-180"></i> <span
+                        data-i18n="backPortfolio">Portfolio</span>
+                </a>
+                <button onclick="toggleLanguage()"
+                    class="btn-premium flex items-center gap-1 text-slate-300 font-bold bg-slate-800 hover:bg-slate-700 px-3.5 py-1.5 rounded-full text-xs border border-slate-700">
+                    <i class="fa-solid fa-globe"></i> <span id="langBtn">عربي</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="py-14 bg-gradient-to-b from-slate-900/60 to-transparent border-b border-slate-800/60">
+        <div class="container mx-auto px-4 max-w-5xl text-center space-y-5" data-aos="fade-up">
+            <div class="flex justify-center items-center gap-2 flex-wrap">
+                <span
+                    class="inline-flex items-center gap-1.5 bg-emerald-950/80 text-emerald-400 border border-emerald-800/80 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                    <i class="fa-brands fa-apple text-sm"></i> Apple HomeKit & Siri
+                </span>
+                <span
+                    class="inline-flex items-center gap-1.5 bg-blue-950/80 text-blue-400 border border-blue-800/80 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                    <i class="fa-solid fa-mobile-screen text-sm"></i> Blynk IoT Dashboard
+                </span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black logo-font text-white leading-tight" data-i18n="heroTitle">
+                Autonomous Smart Villa & Aid Kit
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed" data-i18n="heroDesc">
+                A full-scale architectural smart home model powered by ESP32 microcontrollers, combining native Siri
+                voice recognition, servo door actuation, automated climate cooling, and dual Apple HomeKit & Blynk IoT
+                dashboards.
+            </p>
+
+            <!-- Key Capabilities Badges -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto pt-4 text-center">
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+                    <span class="block text-xl md:text-2xl font-black text-emerald-400 logo-font">Native Siri</span>
+                    <span class="text-[11px] text-slate-400" data-i18n="statVoice">Voice Recognition</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+                    <span class="block text-xl md:text-2xl font-black text-blue-400 logo-font">Servo MG90S</span>
+                    <span class="text-[11px] text-slate-400" data-i18n="statDoor">Smart Access Door</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+                    <span class="block text-xl md:text-2xl font-black text-purple-400 logo-font">Auto Temp</span>
+                    <span class="text-[11px] text-slate-400" data-i18n="statClimate">Climate Fan Trigger</span>
+                </div>
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+                    <span class="block text-xl md:text-2xl font-black text-amber-400 logo-font">1602 LCD</span>
+                    <span class="text-[11px] text-slate-400" data-i18n="statLcd">Wall Telemetry</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container mx-auto px-4 max-w-5xl py-12 space-y-16">
+
+        <!-- Video Showcase Section (Centered Video + AI Voiceover Engine) -->
+        <section class="space-y-6" data-aos="fade-up">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-circle-play text-emerald-400"></i>
+                        <span data-i18n="videoSectionTitle">Physical System Demonstration</span>
+                    </h2>
+                    <p class="text-xs text-slate-400" data-i18n="videoSectionSubtitle">Complete footage showcasing Siri
+                        scene triggers, Blynk dashboard telemetry, and scale model actuators.</p>
+                </div>
+            </div>
+
+            <!-- Video Player with Embedded Voiceover & Symmetric Layout -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl space-y-0">
+                <!-- Perfectly Centered Video Stage -->
+                <div
+                    class="relative bg-black w-full flex items-center justify-center overflow-hidden min-h-[360px] md:min-h-[520px] max-h-[640px]">
+                    <video id="showcaseVideo" muted playsinline controls
+                        class="mx-auto block max-w-full max-h-[520px] w-auto h-full object-contain shadow-2xl">
+                        <source src="./smart-home-demo-full.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div
+                        class="absolute top-3 left-4 rtl:left-auto rtl:right-4 bg-black/85 backdrop-blur-md text-[10px] text-white px-3 py-1 rounded-md font-bold flex items-center gap-2 border border-slate-700/80 pointer-events-none z-10 shadow-lg">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="videoStatusTag">LIVE HARDWARE • SIRI & BLYNK DEMO</span>
+                    </div>
+                </div>
+
+                <!-- AI Voiceover Control Bar -->
+                <div
+                    class="bg-slate-900/95 p-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-base border border-emerald-500/30">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-white block" data-i18n="voiceoverBarTitle">AI Voiceover
+                                Walkthrough</span>
+                            <span id="voiceoverAccentNote" class="text-[11px] text-slate-400">Egyptian Arabic & Native
+                                US English Voice Engine</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button id="voiceoverBtn" onclick="toggleVoiceover()"
+                            class="btn-premium w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg">
+                            <i id="voiceoverIcon" class="fa-solid fa-microphone-lines"></i>
+                            <span id="voiceoverBtnLabel">Play AI Voiceover</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Interactive Circuit & Breadboard Diagram Section -->
+        <section class="space-y-6" data-aos="fade-up">
+            <div>
+                <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-microchip text-emerald-400"></i>
+                    <span data-i18n="schematicTitle">Interactive Hardware Circuit & Pinout Architecture</span>
+                </h2>
+                <p class="text-xs text-slate-400" data-i18n="schematicSubtitle">Visual circuit board diagram showing pin
+                    buses, logic voltages, and sensor connections.</p>
+            </div>
+
+            <!-- Schematic Board Container -->
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 circuit-grid shadow-2xl space-y-8">
+
+                <!-- Top Board Status Bar -->
+                <div class="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="font-mono text-xs font-bold text-emerald-400">ESP32-WROOM-32D DUAL CORE [3.3V/5V
+                            LOGIC]</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span
+                            class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-mono text-[11px] border border-slate-700">HAP:
+                            2.4 GHz</span>
+                        <span
+                            class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 font-mono text-[11px] border border-slate-700">I2C:
+                            0x27</span>
+                    </div>
+                </div>
+
+                <!-- Visual Circuit Blocks Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+
+                    <!-- Column 1: Power & Central Microcontroller -->
+                    <div
+                        class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span
+                                    class="text-xs font-black text-blue-400 uppercase tracking-widest font-mono">Microcontroller
+                                    Core</span>
+                                <span
+                                    class="bg-blue-950 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded border border-blue-800">MASTER</span>
+                            </div>
+                            <div
+                                class="bg-slate-900 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
+                                <div class="text-center font-bold text-white pb-2 border-b border-slate-800">ESP32 Dev
+                                    Board</div>
+                                <div class="flex justify-between text-slate-400"><span>VIN (Power In):</span> <span
+                                        class="text-emerald-400">5.0V DC</span></div>
+                                <div class="flex justify-between text-slate-400"><span>3V3 (Logic):</span> <span
+                                        class="text-emerald-400">3.3V Rail</span></div>
+                                <div class="flex justify-between text-slate-400"><span>GND Bus:</span> <span
+                                        class="text-emerald-400">Common Ground</span></div>
+                                <div class="flex justify-between text-slate-400"><span>Wireless:</span> <span
+                                        class="text-blue-400">802.11 b/g/n</span></div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-[11px] text-slate-400">
+                            <i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Dual-rail distribution: 5V drives the
+                            servos and sensors, while 3.3V runs micro-controller logic.
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Sensors & Inputs -->
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center mb-1">
+                            <span
+                                class="text-xs font-black text-purple-400 uppercase tracking-widest font-mono">Telemetry
+                                & Sensors</span>
+                            <span
+                                class="bg-purple-950 text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded border border-purple-800">INPUTS</span>
+                        </div>
+
+                        <!-- DHT11 Module -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-temperature-half text-blue-400"></i> DHT11 Sensor</span>
+                                <span class="text-emerald-400 font-mono font-bold">GPIO 14</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Single-wire digital bus capturing ambient temp
+                                (27.9°C) & humidity (38.1%).</p>
+                        </div>
+
+                        <!-- MQ Gas Sensor -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-fire-smoke text-amber-400"></i> MQ-2 / Gas Sensor</span>
+                                <span class="text-emerald-400 font-mono font-bold">GPIO 34 (ADC)</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Analog hazard threshold detection triggering HomeKit
+                                smoke alert and sirens.</p>
+                        </div>
+
+                        <!-- Wall LCD 1602 -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-tv text-cyan-400"></i> 1602 I2C Display</span>
+                                <span class="text-emerald-400 font-mono font-bold">SDA: 21 | SCL: 22</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">I2C parallel bus showing real-time network clock,
+                                temperature, and alert flags.</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Actuators & Outputs -->
+                    <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-lg">
+                        <div class="flex justify-between items-center mb-1">
+                            <span
+                                class="text-xs font-black text-emerald-400 uppercase tracking-widest font-mono">Actuation
+                                Drivers</span>
+                            <span
+                                class="bg-emerald-950 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-800">OUTPUTS</span>
+                        </div>
+
+                        <!-- Servo Door -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-door-open text-emerald-400"></i> MG90S / SG90 Servo</span>
+                                <span class="text-emerald-400 font-mono font-bold">GPIO 18</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">50Hz PWM signal turning servo from 0° (locked) to 90°
+                                (open).</p>
+                        </div>
+
+                        <!-- Exhaust Fan -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-fan text-teal-400"></i> Kitchen Exhaust Fan</span>
+                                <span class="text-emerald-400 font-mono font-bold">GPIO 19</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Relay / MOSFET channel automated by temperature
+                                setpoint.</p>
+                        </div>
+
+                        <!-- Multi-Room Light Relay Grid -->
+                        <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs space-y-1">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white flex items-center gap-1.5"><i
+                                        class="fa-solid fa-lightbulb text-amber-300"></i> Multi-Room Lights (1–6)</span>
+                                <span class="text-emerald-400 font-mono font-bold">GPIO 23, 25-27, 32-33</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Mapped as discrete HomeKit LightBulb accessories with
+                                voice dimming logic.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- System Architecture & Capabilities -->
+        <section class="space-y-6" data-aos="fade-up">
+            <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-emerald-400"></i>
+                <span data-i18n="featuresTitle">Integrated System Capabilities</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl glow-card space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg border border-blue-500/20">
+                        <i class="fa-solid fa-microphone"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-sm" data-i18n="feat1Title">Siri Voice & Apple HomeKit</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="feat1Desc">
+                        Direct integration using Apple's HomeKit Accessory Protocol (HAP). Control individual room
+                        lights, kitchen lights, and trigger composite scenes such as "Good Morning" and "Good Night".
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl glow-card space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/20">
+                        <i class="fa-solid fa-door-open"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-sm" data-i18n="feat2Title">Smart Access & Actuators</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="feat2Desc">
+                        Equipped with an SG90/MG90S servo-motorized entrance door that opens and closes on voice command
+                        or dashboard button, with visual position feedback.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl glow-card space-y-3">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg border border-amber-500/20">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-sm" data-i18n="feat3Title">Blynk IoT Telemetry & Autopilot</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="feat3Desc">
+                        Live gauges monitoring ambient temperature (DHT11), humidity, and combustible gas levels (MQ-2).
+                        Features autonomous fan triggers when temperatures exceed predefined setpoints.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hardware Pinout & Wiring Table -->
+        <section class="space-y-4" data-aos="fade-up">
+            <h2 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                <i class="fa-solid fa-diagram-project text-emerald-400"></i>
+                <span data-i18n="wiringTitle">Hardware Pinout & Mapping</span>
+            </h2>
+            <div class="overflow-x-auto bg-slate-900 rounded-2xl border border-slate-800 shadow-xl">
+                <table class="w-full text-left text-xs md:text-sm">
+                    <thead class="bg-slate-950/80 text-slate-400 uppercase text-[11px] font-bold">
+                        <tr>
+                            <th class="p-4">Subsystem Component</th>
+                            <th class="p-4">Pins Connected</th>
+                            <th class="p-4">ESP32 GPIO</th>
+                            <th class="p-4">Protocol / Function</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-slate-300">
+                        <tr>
+                            <td class="p-4 font-semibold text-white">Smart Entrance Door</td>
+                            <td class="p-4">PWM, 5V, GND</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 18</td>
+                            <td class="p-4">Servo PWM Angle (0° to 90°)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-white">Kitchen Exhaust Fan</td>
+                            <td class="p-4">Relay Signal, 5V, GND</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 19</td>
+                            <td class="p-4">Digital Output / Auto Climate</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-white">Room Lighting Grid (1–6)</td>
+                            <td class="p-4">Relay / Transistor Rails</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 23, 25, 26, 27, 32, 33</td>
+                            <td class="p-4">Apple HomeKit LightBulb Service</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-white">DHT11 Climate Sensor</td>
+                            <td class="p-4">DATA, 3.3V, GND</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 14</td>
+                            <td class="p-4">Single-Wire Digital Telemetry</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-white">MQ-2 Gas / Hazard Sensor</td>
+                            <td class="p-4">A0, 5V, GND</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 34 (ADC1)</td>
+                            <td class="p-4">Analog Hazard Voltage</td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 font-semibold text-white">Wall Diagnostic Display</td>
+                            <td class="p-4">SDA, SCL, 5V, GND</td>
+                            <td class="p-4 font-mono text-emerald-400">GPIO 21 (SDA), GPIO 22 (SCL)</td>
+                            <td class="p-4">I2C Real-Time Clock & Telemetry</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Academy CTA -->
+        <section
+            class="bg-gradient-to-r from-emerald-900 to-teal-950 border border-emerald-800/80 rounded-3xl p-8 md:p-12 text-center space-y-6"
+            data-aos="fade-up">
+            <h3 class="text-2xl md:text-3xl font-black logo-font uppercase text-white" data-i18n="ctaTitle">
+                Build Industry-Ready IoT & Embedded Systems
+            </h3>
+            <p class="text-emerald-100 max-w-xl mx-auto text-xs md:text-sm leading-relaxed" data-i18n="ctaDesc">
+                At Fekra Tech Academy, our students master actual embedded C++, network protocols, and real physical
+                hardware instead of toy simulators.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 pt-2">
+                <a href="https://wa.me/201099995519" target="_blank" rel="noopener noreferrer"
+                    class="btn-premium bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold px-8 py-3 rounded-full text-xs md:text-sm inline-flex items-center gap-2 shadow-lg">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> <span data-i18n="ctaWhatsApp">Inquire on
+                        WhatsApp</span>
+                </a>
+                <a href="https://fekra-tech-acad.vercel.app/portfolio.html"
+                    class="btn-premium bg-slate-900/80 hover:bg-slate-900 text-slate-200 font-bold px-6 py-3 rounded-full text-xs md:text-sm border border-slate-700">
+                    <span data-i18n="ctaPortfolio">Explore Full Portfolio</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Fekra Tech Academy. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 30 });
+
+        let currentLang = 'en';
+        let isVoiceoverPlaying = false;
+        let availableVoices = [];
+
+        function loadVoices() {
+            if ('speechSynthesis' in window) {
+                availableVoices = window.speechSynthesis.getVoices();
+            }
+        }
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices();
+        }
+
+        const narrationScript = {
+            en: "This is our complete Apple HomeKit and IoT Smart Home system. Powered by the ESP32 microcontroller, it provides full native Siri voice recognition and dual Blynk dashboard control. Watch as Siri opens the motorized entrance door, toggles individual room lights, triggers the kitchen ventilation fan, and runs seamless Good Morning and Good Night automation scenes, all backed by real-time climate telemetry on the embedded LCD display.",
+            ar: "ده نظام المنزل الذكي المتكامل المدعوم ببروتوكول أبل هوم كيت وتطبيق بلينك. المشروع مبني بالكامل على شريحة ESP32، وبيوفر تحكم صوتي كامل عبر سيري وتطبيق بلينك في نفس الوقت. زي ما واضح في الفيديو، سيري بتتحكم في فتح وقفل الباب الذكي بمحرك السيرفو، تشغيل وإطفاء أنوار الغرف، تشغيل مروحة المطبخ، وتنفيذ سيناريوهات كاملة زي تصبح على خير وصباح الخير، مع عرض البيانات لحظياً على شاشة الـ LCD."
+        };
+
+        const i18n = {
+            en: {
+                backPortfolio: "Portfolio",
+                heroTitle: "Autonomous Smart Villa & Aid Kit",
+                heroDesc: "A full-scale architectural smart home model powered by ESP32 microcontrollers, combining native Siri voice recognition, servo door actuation, automated climate cooling, and dual Apple HomeKit & Blynk IoT dashboards.",
+                statVoice: "Voice Recognition",
+                statDoor: "Smart Access Door",
+                statClimate: "Climate Fan Trigger",
+                statLcd: "Wall Telemetry",
+                videoSectionTitle: "Physical System Demonstration",
+                videoSectionSubtitle: "Complete footage showcasing Siri scene triggers, Blynk dashboard telemetry, and scale model actuators.",
+                voiceoverBarTitle: "AI Voiceover Walkthrough",
+                voiceoverPlay: "Play AI Voiceover",
+                voiceoverStop: "Stop Voiceover",
+                featuresTitle: "Integrated System Capabilities",
+                feat1Title: "Siri Voice & Apple HomeKit",
+                feat1Desc: "Direct integration using Apple's HomeKit Accessory Protocol (HAP). Control individual room lights, kitchen lights, and trigger composite scenes such as 'Good Morning' and 'Good Night'.",
+                feat2Title: "Smart Access & Actuators",
+                feat2Desc: "Equipped with an SG90/MG90S servo-motorized entrance door that opens and closes on voice command or dashboard button, with visual position feedback.",
+                feat3Title: "Blynk IoT Telemetry & Autopilot",
+                feat3Desc: "Live gauges monitoring ambient temperature (DHT11), humidity, and combustible gas levels (MQ-2). Features autonomous fan triggers when temperatures exceed predefined setpoints.",
+                wiringTitle: "Hardware Pinout & Mapping",
+                schematicTitle: "Interactive Hardware Circuit & Pinout Architecture",
+                schematicSubtitle: "Visual circuit board diagram showing pin buses, logic voltages, and sensor connections.",
+                ctaTitle: "Build Industry-Ready IoT & Embedded Systems",
+                ctaDesc: "At Fekra Tech Academy, our students master actual embedded C++, network protocols, and real physical hardware instead of toy simulators.",
+                ctaWhatsApp: "Inquire on WhatsApp",
+                ctaPortfolio: "Explore Full Portfolio"
+            },
+            ar: {
+                backPortfolio: "معرض المشاريع",
+                heroTitle: "فيلا ذكية بنظام Apple HomeKit و Blynk IoT",
+                heroDesc: "مجسم هندسي متكامل لفيلا ذكية يعمل بمعالج ESP32، يجمع بين التحكم الصوتي عبر Siri، فتح الباب بمحرك سيرفو، التبريد التلقائي للحرارة، ولوحة تحكم Blynk السحابية.",
+                statVoice: "أوامر سيري الصوتية",
+                statDoor: "باب ذكي بمحرك سيرفو",
+                statClimate: "تبريد تلقائي بالمروحة",
+                statLcd: "شاشة بيانات حائطية",
+                videoSectionTitle: "العرض العملي لتشغيل النظام",
+                videoSectionSubtitle: "فيديو يوضح تنفيذ الأوامر الصوتية لسيري، لوحة تحكم Blynk، وتحريك المشغلات الميكانيكية.",
+                voiceoverBarTitle: "الشرح الصوتي الذكي (Voiceover)",
+                voiceoverPlay: "تشغيل الشرح الصوتي",
+                voiceoverStop: "إيقاف الشرح الصوتي",
+                featuresTitle: "المميزات والقدرات الهندسية",
+                feat1Title: "التحكم الصوتي عبر Siri و Apple Home",
+                feat1Desc: "ربط مباشر ببروتوكول HAP للتحكم في إضاءة كل غرفة على حدة، وتشغيل سيناريوهات مركبة مثل صباح الخير وتصبح على خير بدون أي وسيط خارجي.",
+                feat2Title: "منظومة الدخول والمشغلات الذكية",
+                feat2Desc: "باب ذكي يعمل بمحرك سيرفو SG90 يفتح ويغلق بالأوامر الصوتية أو عبر زر التطبيق مع محاكاة دقيقة لحركة الأبواب الواقعية.",
+                feat3Title: "لوحة تحكم Blynk والأوتوميشن",
+                feat3Desc: "مراقبة مستمرة للحرارة، الرطوبة، والغاز، مع تشغيل مروحة التهوية تلقائياً عند تجاوز درجة الحرارة للحد المحدد برمجياً.",
+                wiringTitle: "جدول توصيل الأسلاك والمنافذ (Wiring)",
+                schematicTitle: "المخطط التفاعلي لتوصيلات الهاردوير والدوائر الإلكترونية",
+                schematicSubtitle: "رسم تخطيطي يوضح مسارات الطاقة، الفولتية، وحساسات شريحة ESP32.",
+                ctaTitle: "تعلم هندسة إنترنت الأشياء والأنظمة المدمجة الحقيقية",
+                ctaDesc: "في أكاديمية فكرة تك، يتعلم الطلاب برمجة المتحكمات بلغة C++، ربط البروتوكولات السحابية، وبناء مجسمات عملية تؤهلهم لسوق العمل.",
+                ctaWhatsApp: "تواصل معنا عبر واتساب",
+                ctaPortfolio: "تصفح كل المشاريع"
+            }
+        };
+
+        function selectOptimalVoice(lang) {
+            if (!availableVoices || availableVoices.length === 0) loadVoices();
+
+            if (lang === 'ar') {
+                const egVoice = availableVoices.find(v =>
+                    (v.lang === 'ar-EG' || v.lang === 'ar_EG') ||
+                    (v.lang.startsWith('ar') && (v.name.toLowerCase().includes('egypt') || v.name.toLowerCase().includes('maged') || v.name.toLowerCase().includes('laila') || v.name.toLowerCase().includes('salma')))
+                );
+                if (egVoice) return egVoice;
+                return availableVoices.find(v => v.lang.startsWith('ar')) || null;
+            } else {
+                const usVoice = availableVoices.find(v =>
+                    (v.lang === 'en-US' || v.lang === 'en_US') &&
+                    (v.name.toLowerCase().includes('natural') || v.name.toLowerCase().includes('united states') || v.name.toLowerCase().includes('google') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('alex'))
+                );
+                if (usVoice) return usVoice;
+                return availableVoices.find(v => v.lang === 'en-US' || v.lang === 'en_US') || null;
+            }
+        }
+
+        function toggleVoiceover() {
+            if (isVoiceoverPlaying) {
+                stopVoiceover();
+            } else {
+                playVoiceover();
+            }
+        }
+
+        function playVoiceover() {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+
+            const text = narrationScript[currentLang] || narrationScript['en'];
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voice = selectOptimalVoice(currentLang);
+            if (voice) utterance.voice = voice;
+
+            utterance.lang = currentLang === 'ar' ? 'ar-EG' : 'en-US';
+            utterance.rate = currentLang === 'ar' ? 0.98 : 1.0;
+            utterance.pitch = 1.0;
+
+            utterance.onend = stopVoiceover;
+            utterance.onerror = stopVoiceover;
+
+            window.speechSynthesis.speak(utterance);
+            isVoiceoverPlaying = true;
+            document.getElementById('voiceoverIcon').className = "fa-solid fa-stop text-red-400";
+            document.getElementById('voiceoverBtnLabel').textContent = i18n[currentLang].voiceoverStop;
+        }
+
+        function stopVoiceover() {
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            isVoiceoverPlaying = false;
+            const icon = document.getElementById('voiceoverIcon');
+            const label = document.getElementById('voiceoverBtnLabel');
+            if (icon) icon.className = "fa-solid fa-microphone-lines";
+            if (label) label.textContent = i18n[currentLang].voiceoverPlay;
+        }
+
+        function toggleLanguage() {
+            stopVoiceover();
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
+            });
+
+            document.getElementById('voiceoverAccentNote').textContent = currentLang === 'ar' ? 'محرك صوتي باللهجة المصرية الفصحى' : 'Egyptian Arabic & Native US English Voice Engine';
+        }
+    </script>
+</body>
+
+</html>
